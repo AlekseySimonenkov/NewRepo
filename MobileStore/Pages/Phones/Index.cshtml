@@ -1,0 +1,86 @@
+﻿@page
+@model MobileStore.Pages.Phones.IndexModel
+
+@{
+    ViewData["Title"] = "Catalog";
+}
+
+<h1>Catalog</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+
+    <form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               <a asp-page="./Index" asp-route-sortOrder="@Model.FirmSort"
+                  asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Phones[0].Firm)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phones[0].Model)
+            </th>
+            <th>
+                 <a asp-page="./Index" asp-route-sortOrder="@Model.PriceSort"
+                    asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Phones[0].Price)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Phones) 
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                //здесь я пытаюсь перенаправить на метод создания экземпляра в базе buyCart
+                <a href="./Phones/BuyCartsController/Buy/@item.PhoneID" >Добавить в корзину</a> |
+                <a asp-page="./Details" asp-route-id="@item.PhoneID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.PhoneID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.Phones.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Phones.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Phones.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Phones.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

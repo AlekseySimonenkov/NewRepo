@@ -1,0 +1,47 @@
+﻿@page
+@model MobileStore.Pages.BuyCarts.IndexModel
+
+@{
+    ViewData["Title"] = "Buy Cart";
+}
+
+<h1>Корзина товаров</h1>
+
+<p>
+    <a asp-page="/Phones/Index">Добавить товар в корзину</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyCart[0].Firm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyCart[0].Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyCart[0].Client)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.BuyCart) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Name)
+            </td>
+            <td>|
+                <a asp-page="./Details" asp-route-id="@item.PhoneID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.PhoneID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

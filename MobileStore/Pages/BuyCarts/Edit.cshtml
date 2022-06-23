@@ -1,0 +1,45 @@
+﻿@page
+@model MobileStore.Pages.BuyCarts.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BuyCart</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BuyCart.PhoneID" />
+            <div class="form-group">
+                <label asp-for="BuyCart.ClientID" class="control-label"></label>
+                <select asp-for="BuyCart.ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+                <span asp-validation-for="BuyCart.ClientID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BuyCart.Firm" class="control-label"></label>
+                <input asp-for="BuyCart.Firm" class="form-control" />
+                <span asp-validation-for="BuyCart.Firm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BuyCart.Model" class="control-label"></label>
+                <input asp-for="BuyCart.Model" class="form-control" />
+                <span asp-validation-for="BuyCart.Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
